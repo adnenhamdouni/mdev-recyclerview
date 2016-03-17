@@ -48,9 +48,16 @@ public class UserWrapper {
 
     public ArrayList<UserWrapper> initializeData(){
         ArrayList<UserWrapper> users = new ArrayList<UserWrapper>();
-        users.add(new UserWrapper("Emma Wilson", "23 years old", R.drawable.user_profile));
-        users.add(new UserWrapper("Lavery Maiss", "25 years old", R.drawable.user_profile));
-        users.add(new UserWrapper("Lillie Watts", "35 years old", R.drawable.user_profile));
+
+        for (int i =0; i <100; i++){
+
+            users.add(new UserWrapper("User "+i, "23 years old", R.drawable.user_profile));
+
+        }
+
+//        users.add(new UserWrapper("Emma Wilson", "23 years old", R.drawable.user_profile));
+//        users.add(new UserWrapper("Lavery Maiss", "25 years old", R.drawable.user_profile));
+//        users.add(new UserWrapper("Lillie Watts", "35 years old", R.drawable.user_profile));
 
         return users;
     }
