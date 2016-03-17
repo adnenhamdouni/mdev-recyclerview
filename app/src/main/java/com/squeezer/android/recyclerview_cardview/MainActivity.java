@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.squeezer.android.recyclerview_cardview.adapter.UserAdapter;
+import com.squeezer.android.recyclerview_cardview.fragment.RecyclerFragment;
 import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
 
 import java.util.ArrayList;
@@ -19,11 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter<UserAdapter.ViewHolder> mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<UserWrapper> mUserList;
-    private UserWrapper mUserWrapper;
+
 
     FloatingActionButton fab;
 
@@ -36,7 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         initFab();
-        initRecyclerView();
+
+        if (savedInstanceState == null) {
+            RecyclerFragment fragment = new RecyclerFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.content, fragment)
+                    .commit();
+        }
 
 
     }
@@ -54,24 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initRecyclerView() {
 
-        mUserWrapper = new UserWrapper();
-        mUserList = mUserWrapper.initializeData();
-
-
-
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_card_list);
-
-        mRecyclerView.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new UserAdapter(mUserList);
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
 
     @Override
