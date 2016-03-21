@@ -10,16 +10,18 @@ import java.util.List;
  */
 public class UserWrapper {
 
+    int mType;
     String mName;
     String mAge;
     int mPhotoId;
 
     public UserWrapper() {}
 
-    public UserWrapper(String name, String age, int photoId) {
+    public UserWrapper(String name, String age, int photoId, int type) {
         this.mName = name;
         this.mAge = age;
         this.mPhotoId = photoId;
+        this.mType = type;
     }
 
     public String getName() {
@@ -46,12 +48,20 @@ public class UserWrapper {
         this.mPhotoId = photoId;
     }
 
+    public int getType() {
+        return mType;
+    }
+
+    public void setType(int type) {
+        this.mType = type;
+    }
+
     public ArrayList<UserWrapper> initializeData(){
         ArrayList<UserWrapper> users = new ArrayList<UserWrapper>();
 
         for (int i =0; i <100; i++){
 
-            users.add(new UserWrapper("User "+i, "23 years old", R.drawable.user_profile));
+            users.add(new UserWrapper("User "+i, "23 years old", R.drawable.user_profile, 2));
 
         }
 
