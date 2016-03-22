@@ -88,20 +88,22 @@ public class RecyclerFragment extends Fragment {
                 lastVisibleItem = mRecyclerViewHelper.findLastVisibleItemPosition();
 
 
-                mButtonCountTop.setText(Integer.toString(firstVisibleItem));
-                mButtonCountBottom.setText(Integer.toString(mUserList.size() - lastVisibleItem));
 
                 if (firstVisibleItem == 0){
                     mButtonCountTop.setVisibility(View.INVISIBLE);
                     mButtonCountBottom.setVisibility(View.VISIBLE);
 
-                } else if (lastVisibleItem == mUserList.size()-1 ){
+                } else if (lastVisibleItem == mUserList.size()-1){
                     mButtonCountTop.setVisibility(View.VISIBLE);
                     mButtonCountBottom.setVisibility(View.INVISIBLE);
                 } else {
                     mButtonCountTop.setVisibility(View.VISIBLE);
                     mButtonCountBottom.setVisibility(View.VISIBLE);
                 }
+
+
+                mButtonCountTop.setText(Integer.toString(firstVisibleItem));
+                mButtonCountBottom.setText(Integer.toString(mUserList.size()-1 - lastVisibleItem));
 
 
                 int sizeList = mUserList.size()-1;
