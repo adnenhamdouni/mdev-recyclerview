@@ -7,5 +7,5 @@ public class AppHelper {
 
     public static final int FIRST_ROW = 0;
 
-    public static final int OTHER_ROW = 1;
+    public static final int SECOND_ROW = 1;
 }

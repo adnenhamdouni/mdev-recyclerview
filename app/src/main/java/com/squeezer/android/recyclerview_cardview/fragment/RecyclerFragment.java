@@ -15,7 +15,6 @@ import com.squeezer.android.recyclerview_cardview.R;
 import com.squeezer.android.recyclerview_cardview.adapter.UserAdapter;
 import com.squeezer.android.recyclerview_cardview.utils.AppHelper;
 import com.squeezer.android.recyclerview_cardview.utils.RecyclerViewPositionHelper;
-import com.squeezer.android.recyclerview_cardview.viewholder.MultipleRowViewHolder;
 import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class RecyclerFragment extends Fragment {
     RecyclerViewPositionHelper mRecyclerViewHelper;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter<MultipleRowViewHolder> mAdapter;
+    private RecyclerView.Adapter<UserAdapter.MainViewHolder> mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<UserWrapper> mUserList;
     private UserWrapper mUserWrapper;
@@ -155,7 +154,7 @@ public class RecyclerFragment extends Fragment {
                 type = AppHelper.FIRST_ROW;
                 content = "Multiple row layout";
             } else {
-                type = AppHelper.OTHER_ROW;
+                type = AppHelper.SECOND_ROW;
                 content = "User "+i;
             }
 
