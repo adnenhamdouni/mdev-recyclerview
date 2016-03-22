@@ -26,16 +26,10 @@ public class RecyclerListAdapter extends
     private ArrayList<UserWrapper> mObjectsList = new ArrayList<UserWrapper>();
 
 
-    private LayoutManager mLayoutManager;
-    private RecyclerView mRecyclerView;
 
-
-
-    public RecyclerListAdapter(Context context, ArrayList<UserWrapper> itemsList, RecyclerView recyclerView) {
+    public RecyclerListAdapter(Context context, ArrayList<UserWrapper> itemsList) {
 
         this.mObjectsList = itemsList;
-        this.mRecyclerView = recyclerView;
-        this.mLayoutManager = recyclerView.getLayoutManager();
     }
 
     @Override

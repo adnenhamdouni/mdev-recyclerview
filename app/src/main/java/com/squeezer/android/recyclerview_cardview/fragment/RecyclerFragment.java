@@ -140,7 +140,7 @@ public class RecyclerFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new RecyclerListAdapter(mContext, mUserList, mRecyclerView);
+        mAdapter = new RecyclerListAdapter(mContext, mUserList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
