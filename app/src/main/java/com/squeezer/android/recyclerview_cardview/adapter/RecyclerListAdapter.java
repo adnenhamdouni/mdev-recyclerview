@@ -1,7 +1,10 @@
 package com.squeezer.android.recyclerview_cardview.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +20,22 @@ import java.util.ArrayList;
 /**
  * Created by adnen on 1/8/16.
  */
-public class UserAdapter extends
-        RecyclerView.Adapter<UserAdapter.MainViewHolder>{
+public class RecyclerListAdapter extends
+        RecyclerView.Adapter<RecyclerListAdapter.MainViewHolder> {
 
     private ArrayList<UserWrapper> mObjectsList = new ArrayList<UserWrapper>();
 
 
-    public UserAdapter(Context context, ArrayList<UserWrapper> itemsList) {
+    private LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerView;
 
-        mObjectsList = itemsList;
+
+
+    public RecyclerListAdapter(Context context, ArrayList<UserWrapper> itemsList, RecyclerView recyclerView) {
+
+        this.mObjectsList = itemsList;
+        this.mRecyclerView = recyclerView;
+        this.mLayoutManager = recyclerView.getLayoutManager();
     }
 
     @Override
@@ -51,6 +61,9 @@ public class UserAdapter extends
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
+
+
+        Log.v("onClickTag", "RecyclerListAdapter: onBindViewHolder called with position = " + position);
 
         switch ( holder.getItemViewType () ) {
 
@@ -88,7 +101,9 @@ public class UserAdapter extends
     @Override
     public int getItemCount() {
         return (mObjectsList != null && mObjectsList.size() > 0 ) ? mObjectsList.size() : 0;
+        //return mLayoutManager == null ? 0 : mLayoutManager.getItemCount();
     }
+
 
 
     public class MainViewHolder extends RecyclerView.ViewHolder {
@@ -129,4 +144,7 @@ public class UserAdapter extends
         }
 
     }
+
+
+
 }

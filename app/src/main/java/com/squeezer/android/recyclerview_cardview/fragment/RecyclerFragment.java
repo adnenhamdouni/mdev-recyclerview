@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.squeezer.android.recyclerview_cardview.R;
-import com.squeezer.android.recyclerview_cardview.adapter.UserAdapter;
+import com.squeezer.android.recyclerview_cardview.adapter.RecyclerListAdapter;
 import com.squeezer.android.recyclerview_cardview.helper.AppHelper;
 import com.squeezer.android.recyclerview_cardview.utils.RecyclerViewPositionHelper;
 import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
@@ -31,10 +32,10 @@ public class RecyclerFragment extends Fragment {
     private Context mContext;
 
     int firstVisibleItem, lastVisibleItem, visibleItemCount, totalItemCount;
-    RecyclerViewPositionHelper mRecyclerViewHelper;
+    //RecyclerViewPositionHelper mRecyclerViewHelper;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter<UserAdapter.MainViewHolder> mAdapter;
+    private RecyclerView.Adapter<RecyclerListAdapter.MainViewHolder> mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<UserWrapper> mUserList;
     private UserWrapper mUserWrapper;
@@ -80,12 +81,12 @@ public class RecyclerFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
 
 
-                mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+                //mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
 
                 visibleItemCount = recyclerView.getChildCount();
-                totalItemCount = mRecyclerViewHelper.getItemCount();
-                firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
-                lastVisibleItem = mRecyclerViewHelper.findLastVisibleItemPosition();
+                totalItemCount = getItemCount();
+                firstVisibleItem = findFirstVisibleItemPosition();
+                lastVisibleItem = findLastVisibleItemPosition();
 
 
 
@@ -139,7 +140,7 @@ public class RecyclerFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new UserAdapter(mContext, mUserList);
+        mAdapter = new RecyclerListAdapter(mContext, mUserList, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -174,5 +175,67 @@ public class RecyclerFragment extends Fragment {
         Log.i("adnen", "totalItemCount ->" + totalItemCount);
         Log.i("adnen", "firstVisibleItem ->" + firstVisibleItem);
         Log.i("adnen", "lastVisibleItem ->" + lastVisibleItem);
+    }
+
+    /*************************
+     *
+     */
+
+    public int getItemCount() {
+        return mLayoutManager == null ? 0 : mLayoutManager.getItemCount();
+    }
+
+
+    public int findFirstVisibleItemPosition() {
+        final View child = findOneVisibleChild(0, mLayoutManager.getChildCount(), false, true);
+        return child == null ? RecyclerView.NO_POSITION : mRecyclerView.getChildAdapterPosition(child);
+    }
+
+    public int findFirstCompletelyVisibleItemPosition() {
+        final View child = findOneVisibleChild(0, mLayoutManager.getChildCount(), true, false);
+        return child == null ? RecyclerView.NO_POSITION : mRecyclerView.getChildAdapterPosition(child);
+    }
+
+
+    public int findLastVisibleItemPosition() {
+        final View child = findOneVisibleChild(mLayoutManager.getChildCount() - 1, -1, false, true);
+        return child == null ? RecyclerView.NO_POSITION : mRecyclerView.getChildAdapterPosition(child);
+    }
+
+    public int findLastCompletelyVisibleItemPosition() {
+        final View child = findOneVisibleChild(mLayoutManager.getChildCount() - 1, -1, true, false);
+        return child == null ? RecyclerView.NO_POSITION : mRecyclerView.getChildAdapterPosition(child);
+    }
+
+    View findOneVisibleChild(int fromIndex, int toIndex, boolean completelyVisible,
+                             boolean acceptPartiallyVisible) {
+        OrientationHelper helper;
+        if (mLayoutManager.canScrollVertically()) {
+            helper = OrientationHelper.createVerticalHelper(mLayoutManager);
+        } else {
+            helper = OrientationHelper.createHorizontalHelper(mLayoutManager);
+        }
+
+        final int start = helper.getStartAfterPadding();
+        final int end = helper.getEndAfterPadding();
+        final int next = toIndex > fromIndex ? 1 : -1;
+        View partiallyVisible = null;
+        for (int i = fromIndex; i != toIndex; i += next) {
+            final View child = mLayoutManager.getChildAt(i);
+            final int childStart = helper.getDecoratedStart(child);
+            final int childEnd = helper.getDecoratedEnd(child);
+            if (childStart < end && childEnd > start) {
+                if (completelyVisible) {
+                    if (childStart >= start && childEnd <= end) {
+                        return child;
+                    } else if (acceptPartiallyVisible && partiallyVisible == null) {
+                        partiallyVisible = child;
+                    }
+                } else {
+                    return child;
+                }
+            }
+        }
+        return partiallyVisible;
     }
 }
