@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squeezer.android.recyclerview_cardview.R;
-import com.squeezer.android.recyclerview_cardview.utils.AppHelper;
+import com.squeezer.android.recyclerview_cardview.helper.AppHelper;
 import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
 
 import java.util.ArrayList;

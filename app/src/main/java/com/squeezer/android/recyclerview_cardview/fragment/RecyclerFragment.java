@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.squeezer.android.recyclerview_cardview.R;
 import com.squeezer.android.recyclerview_cardview.adapter.UserAdapter;
-import com.squeezer.android.recyclerview_cardview.utils.AppHelper;
+import com.squeezer.android.recyclerview_cardview.helper.AppHelper;
 import com.squeezer.android.recyclerview_cardview.utils.RecyclerViewPositionHelper;
 import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
 

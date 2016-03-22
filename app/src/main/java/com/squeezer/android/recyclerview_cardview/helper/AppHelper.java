@@ -1,4 +1,4 @@
-package com.squeezer.android.recyclerview_cardview.utils;
+package com.squeezer.android.recyclerview_cardview.helper;
 
 /**
  * Created by adnenhamdouni on 21/03/2016.
