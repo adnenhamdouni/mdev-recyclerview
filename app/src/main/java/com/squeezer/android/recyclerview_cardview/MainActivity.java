@@ -1,5 +1,6 @@
 package com.squeezer.android.recyclerview_cardview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,25 +8,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 
-import com.squeezer.android.recyclerview_cardview.adapter.UserAdapter;
-import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
+import com.squeezer.android.recyclerview_cardview.adapters.PrisonerAdapter;
+import com.squeezer.android.recyclerview_cardview.models.Prisoner;
+import com.squeezer.android.recyclerview_cardview.utils.PrisonerContent;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PrisonerAdapter.OnItemClickListener{
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter<UserAdapter.ViewHolder> mAdapter;
+    private RecyclerView.Adapter<PrisonerAdapter.ViewHolder> mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<UserWrapper> mUserList;
-    private UserWrapper mUserWrapper;
+    private ArrayList<Prisoner>mPrisonerList;
+    private Prisoner mPrisonerWrapper;
 
     FloatingActionButton fab;
+
+    public static String TAG = "MainActivity";
+
+    public static final String PRISONER_OBJECT_KEY = "prisoners";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
 
-        mUserWrapper = new UserWrapper();
-        mUserList = mUserWrapper.initializeData();
+        mPrisonerWrapper = new Prisoner();
+        mPrisonerList = PrisonerContent.getPrisoners();
 
 
 
@@ -69,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new UserAdapter(mUserList);
+        mAdapter = new PrisonerAdapter(this, this, mPrisonerList);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
 
@@ -94,5 +103,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.e(TAG, "Item Clicked = "+ position);
+        Intent intent = new Intent(MainActivity.this, PrisonerDetailActivity.class);
+        intent.putExtra(PRISONER_OBJECT_KEY, PrisonerContent.getPrisoners().get(position));
+        startActivity(intent);
     }
 }

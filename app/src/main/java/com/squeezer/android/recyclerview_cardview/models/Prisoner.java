@@ -12,6 +12,9 @@ public class Prisoner implements Serializable{
     private String mDuration;
     private int mImageRes;
 
+    public Prisoner() {
+    }
+
     public Prisoner(String name, String matricule, String duration, int imageRes) {
         this.mName = name;
         this.mMatricule = matricule;

@@ -2,6 +2,7 @@ package com.squeezer.android.recyclerview_cardview.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +22,21 @@ public class PrisonerAdapter extends
 
     private Context mContext;
 
+    private OnItemClickListener mListener;
+
     private ArrayList<Prisoner> mObjectsList = new ArrayList<Prisoner>();
 
-    public PrisonerAdapter(ArrayList<Prisoner> itemsList) {
+    public PrisonerAdapter(Context context, OnItemClickListener listener, ArrayList<Prisoner> itemsList) {
 
-        mObjectsList = itemsList;
+        this.mContext = context;
+        this.mListener = listener;
+        this.mObjectsList = itemsList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.card_layout, parent, false);
+                R.layout.item_prisoner, parent, false);
 
         ViewHolder viewholder = new ViewHolder(view);
         return viewholder;
@@ -39,10 +44,11 @@ public class PrisonerAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mItemName.setText(mObjectsList.get(position).getName());
-        holder.mItemAge.setText(mObjectsList.get(position).getMatricule());
-        holder.mItemPhoto.setImageResource(mObjectsList.get(position)
-                .getPhotoId());
+        holder.mTvName.setText(mObjectsList.get(position).getName());
+        holder.mTvMatricule.setText(mObjectsList.get(position).getMatricule());
+        holder.mTvDuration.setText(mObjectsList.get(position).getDuration());
+        holder.mIvProsoner.setImageResource(mObjectsList.get(position)
+                .getImageRes());
     }
 
     @Override
@@ -50,18 +56,31 @@ public class PrisonerAdapter extends
         return mObjectsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mItemName;
-        public TextView mItemAge;
-        public ImageView mItemPhoto;
+        TextView mTvName;
+        TextView mTvMatricule;
+        TextView mTvDuration;
+        ImageView mIvProsoner;
 
         public ViewHolder(View view) {
             super(view);
-            mItemName = (TextView) view.findViewById(R.id.textview_user_name);
-            mItemAge = (TextView) view.findViewById(R.id.textview_user_age);
-            mItemPhoto = (ImageView) view.findViewById(R.id.imageview_user);
+            mTvName = (TextView) view.findViewById(R.id.tv_prisoner_name);
+            mTvMatricule = (TextView) view.findViewById(R.id.tv_prisoner_matricule);
+            mTvDuration = (TextView) view.findViewById(R.id.tv_prisoner_duration);
+            mIvProsoner = (ImageView) view.findViewById(R.id.img_prisoner);
+            view.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mListener.onItemClick(v, position);
+        }
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 }
