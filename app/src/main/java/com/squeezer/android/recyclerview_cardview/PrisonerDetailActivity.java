@@ -1,0 +1,13 @@
+package com.squeezer.android.recyclerview_cardview;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class PrisonerDetailActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_prisoner_detail);
+    }
+}

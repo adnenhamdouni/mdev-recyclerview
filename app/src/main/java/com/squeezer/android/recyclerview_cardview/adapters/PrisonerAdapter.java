@@ -1,5 +1,6 @@
-package com.squeezer.android.recyclerview_cardview.adapter;
+package com.squeezer.android.recyclerview_cardview.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +9,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squeezer.android.recyclerview_cardview.R;
-import com.squeezer.android.recyclerview_cardview.wrapper.UserWrapper;
+import com.squeezer.android.recyclerview_cardview.models.Prisoner;
 
 import java.util.ArrayList;
 
 /**
  * Created by adnen on 1/8/16.
  */
-public class UserAdapter extends
-        RecyclerView.Adapter<UserAdapter.ViewHolder>{
+public class PrisonerAdapter extends
+        RecyclerView.Adapter<PrisonerAdapter.ViewHolder>{
 
-    private ArrayList<UserWrapper> mObjectsList = new ArrayList<UserWrapper>();
+    private Context mContext;
 
-    public UserAdapter(ArrayList<UserWrapper> itemsList) {
+    private ArrayList<Prisoner> mObjectsList = new ArrayList<Prisoner>();
+
+    public PrisonerAdapter(ArrayList<Prisoner> itemsList) {
 
         mObjectsList = itemsList;
     }
@@ -37,7 +40,7 @@ public class UserAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mItemName.setText(mObjectsList.get(position).getName());
-        holder.mItemAge.setText(mObjectsList.get(position).getAge());
+        holder.mItemAge.setText(mObjectsList.get(position).getMatricule());
         holder.mItemPhoto.setImageResource(mObjectsList.get(position)
                 .getPhotoId());
     }
