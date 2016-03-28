@@ -21,7 +21,8 @@ import com.squeezer.android.recyclerview_cardview.utils.PrisonerContent;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements PrisonerAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity
+        implements PrisonerAdapter.OnItemClickListener{
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter<PrisonerAdapter.ViewHolder> mAdapter;
@@ -108,8 +109,12 @@ public class MainActivity extends AppCompatActivity implements PrisonerAdapter.O
     @Override
     public void onItemClick(View view, int position) {
         Log.e(TAG, "Item Clicked = "+ position);
-        Intent intent = new Intent(MainActivity.this, PrisonerDetailActivity.class);
-        intent.putExtra(PRISONER_OBJECT_KEY, PrisonerContent.getPrisoners().get(position));
+
+        Intent intent = new Intent(MainActivity.this,
+                PrisonerDetailActivity.class);
+
+        intent.putExtra(PRISONER_OBJECT_KEY,
+                PrisonerContent.getPrisoners().get(position));
         startActivity(intent);
     }
 }

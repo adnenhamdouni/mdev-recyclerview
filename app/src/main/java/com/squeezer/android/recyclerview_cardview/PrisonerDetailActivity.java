@@ -22,6 +22,7 @@ public class PrisonerDetailActivity extends AppCompatActivity {
         mTvDuration = (TextView) findViewById(R.id.tv_prisoner_detail_duration);
         mIvPrisoner = (ImageView) findViewById(R.id.img_prisoner_big);
 
+
         Bundle bundle = getIntent().getExtras();
         if (bundle!=null){
             Prisoner prisoner = (Prisoner) bundle.getSerializable(MainActivity.PRISONER_OBJECT_KEY);
